@@ -6,6 +6,25 @@
     <meta name="theme-color" content="#174b3b" />
     <meta name="description" content="BIZDIŃ AÝYL — Джангельдин ауданы тұрғындарының ортақ әлеуметтік желісі." />
     <title>BIZDIŃ AÝYL — Бір аудан. Бір қауым. Бір желі.</title>
+    <script>
+      (function () {
+        var KEY = 'bizdin_auyl_runtime_errors';
+        function save(type, message, extra) {
+          try {
+            var items = JSON.parse(localStorage.getItem(KEY) || '[]');
+            items.push({ time: new Date().toISOString(), type: type, message: String(message || 'Unknown error'), extra: extra || '', url: location.href });
+            localStorage.setItem(KEY, JSON.stringify(items.slice(-100)));
+          } catch (_) {}
+        }
+        window.addEventListener('error', function (e) {
+          save('JavaScript / Resource error', e.message || (e.target && (e.target.src || e.target.href)) || 'Resource failed', (e.filename || '') + ':' + (e.lineno || '') + ':' + (e.colno || ''));
+        }, true);
+        window.addEventListener('unhandledrejection', function (e) {
+          save('Unhandled Promise rejection', e.reason && (e.reason.stack || e.reason.message) || e.reason);
+        });
+        window.__BIZDIN_DIAGNOSTICS__ = { startedAt: new Date().toISOString(), save: save };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
