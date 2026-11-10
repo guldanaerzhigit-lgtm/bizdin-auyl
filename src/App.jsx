@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const initialPosts = [
   { id: 1, name: 'Айдана Сейдахмет', place: 'Торғай', time: '25 минут бұрын', initials: 'АС', text: 'Торғайдың бүгінгі кеші ерекше әдемі екен! 🌅 Осындай сәттер көп болсын.', likes: 24, comments: 6, tone: 'sunset' },
